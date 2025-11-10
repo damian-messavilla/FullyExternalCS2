@@ -45,7 +45,9 @@ public abstract class Offsets
     public static int m_flDefuseCountDown;
     public static int m_flC4Blow;
     public static int m_bBeingDefused;
+    public static int m_hActiveWeapon;
     public const nint m_nCurrentTickThisFrame = 0x34;
+
 
     public static readonly Dictionary<string, int> Bones = new()
     {
@@ -127,6 +129,7 @@ public abstract class Offsets
                 sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_flDefuseCountDown;
             destData.m_flC4Blow = sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_flC4Blow;
             destData.m_bBeingDefused = sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_bBeingDefused;
+            destData.m_hActiveWeapon = sourceDataClient.clientdll.classes.C_CSPlayerPawnBase.fields.m_hActiveWeapon;
 
 
             UpdateStaticFields(destData);
@@ -181,6 +184,7 @@ public abstract class Offsets
         m_flDefuseCountDown = data.m_flDefuseCountDown;
         m_flC4Blow = data.m_flC4Blow;
         m_bBeingDefused = data.m_bBeingDefused;
+        m_hActiveWeapon = data.m_hActiveWeapon;
     }
 
     #endregion

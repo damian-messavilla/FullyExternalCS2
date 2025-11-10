@@ -1,5 +1,6 @@
 using CS2Cheat.Core.Data;
 using CS2Cheat.Data.Entity;
+using CS2Cheat.Utils;
 using Color = SharpDX.Color;
 
 namespace CS2Cheat.Features;
@@ -35,6 +36,49 @@ public static class SkeletonEsp
         ("leg_lower_R", "ankle_R")
     ];
 
+    private static ConfigManager? _config;
+    private static ConfigManager Config => _config ??= ConfigManager.Load();
+
+    private static Color color
+    {
+        get
+        {
+            string input = Config.SkeletonEspColor?.Trim() ?? "";
+            if (string.IsNullOrEmpty(input))
+                return Color.White;
+
+            try
+            {
+                // Hex ("0xFFFF0000" or "FF0000FF")
+                if (input.StartsWith("0x") || input.All(c => "0123456789ABCDEFabcdef".Contains(c)))
+                    return Color.FromBgra(uint.Parse(input.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber));
+
+                // Color names
+                switch (input.ToLower())
+                {
+                    case "red": return Color.Red;
+                    case "green": return Color.Green;
+                    case "blue": return Color.Blue;
+                    case "yellow": return Color.Yellow;
+                    case "cyan": return Color.Cyan;
+                    case "magenta": return Color.Magenta;
+                    case "black": return Color.Black;
+                    case "white": return Color.White;
+                    case "orange": return new Color(255, 165, 0);
+                    case "purple": return new Color(128, 0, 128);
+                    case "pink": return new Color(255, 192, 203);
+                    case "gray":
+                    case "grey": return new Color(128, 128, 128);
+                    default: return Color.White;
+                }
+            }
+            catch
+            {
+                return Color.White;
+            }
+        }
+    }
+
     public static void Draw(Graphics.Graphics graphics)
     {
         var player = graphics.GameData.Player;
@@ -42,7 +86,6 @@ public static class SkeletonEsp
         {
             if (!IsValidEntity(entity, player)) continue;
 
-            var color = GetTeamColor(entity.Team);
             DrawSkeleton(graphics, entity, color);
         }
     }
@@ -50,13 +93,9 @@ public static class SkeletonEsp
 
     private static bool IsValidEntity(Entity entity, Player player)
     {
+        if(Config.TeamCheck && entity.Team == player.Team) return false;
         return entity.IsAlive() &&
                entity.AddressBase != player.AddressBase;
-    }
-
-    private static Color GetTeamColor(Team team)
-    {
-        return team == Team.Terrorists ? Color.Yellow : Color.Blue;
     }
 
     private static void DrawSkeleton(Graphics.Graphics graphics, Entity entity, Color color)

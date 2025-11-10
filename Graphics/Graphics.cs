@@ -179,7 +179,7 @@ public class Graphics : ThreadedServiceBase
         WindowOverlay.Draw(GameProcess, this);
         var features = ConfigManager.Load();
         if (features.EspAimCrosshair) EspAimCrosshair.Draw(this);
-        if (features.EspBox) EspBox.Draw(this);
+        if (features.Esp) EspBox.Draw(this);
         if (features.SkeletonEsp) SkeletonEsp.Draw(this);
         if (features.BombTimer) BombTimer.Draw(this);
     }

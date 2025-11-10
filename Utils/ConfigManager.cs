@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text.Json;
 using Keys = Process.NET.Native.Types.Keys;
+using Color = SharpDX.Color;
 
 namespace CS2Cheat.Utils;
 
@@ -10,12 +11,15 @@ public class ConfigManager
     public bool AimBot { get; set; }
     public bool BombTimer { get; set; }
     public bool EspAimCrosshair { get; set; }
-    public bool EspBox { get; set; }
+    public bool Esp { get; set; }
+    public bool DrawEspBox { get; set; }
     public bool SkeletonEsp { get; set; }
     public bool TriggerBot { get; set; }
     public Keys AimBotKey { get; set; }
     public Keys TriggerBotKey { get; set; }
     public bool TeamCheck { get; set; }
+    public string EspBoxColor { get; set; }
+    public string SkeletonEspColor { get; set; }
 
 
     public static ConfigManager Load()
@@ -26,6 +30,7 @@ public class ConfigManager
             {
                 var defaultOptions = Default();
                 Save(defaultOptions);
+                Console.WriteLine("Couldn't find config file (\"config.json\")");
                 return defaultOptions;
             }
 
@@ -62,15 +67,18 @@ public class ConfigManager
     {
         return new ConfigManager
         {
-            AimBot = true,
-            BombTimer = true,
+            AimBot = false,
+            BombTimer = false,
             EspAimCrosshair = false,
-            EspBox = true,
-            SkeletonEsp = false,
-            TriggerBot = true,
+            Esp = true,
+            DrawEspBox = false,
+            SkeletonEsp = true,
+            TriggerBot = false,
             AimBotKey = Keys.LButton, // https://github.com/lolp1/Process.NET/blob/ce9ac9cceb2afb30c9288495615c6f3aa34bc1f8/src/Process.NET/Native/Types/NativeEnums.cs#L235
             TriggerBotKey = Keys.LMenu,
-            TeamCheck = true
+            TeamCheck = true,
+            EspBoxColor = "0xFF00FF00", // Green
+            SkeletonEspColor = "0xFFFF0000" // Red
         };
     }
 }

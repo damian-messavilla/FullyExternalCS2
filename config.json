@@ -1,11 +1,14 @@
 {
-  "AimBot": true,
-  "BombTimer": true,
-  "EspAimCrosshair": true,
-  "EspBox": true,
-  "SkeletonEsp": false,
-  "TriggerBot": true,
+  "AimBot": false,
+  "BombTimer": false,
+  "EspAimCrosshair": false,
+  "Esp": true,
+  "DrawEspBox": false,
+  "SkeletonEsp": true,
+  "TriggerBot": false,
   "AimBotKey": 1,
   "TriggerBotKey": 164,
-  "TeamCheck": false
+  "TeamCheck": false,
+  "EspBoxColor": "orange",
+  "SkeletonEspColor": "red"
 }

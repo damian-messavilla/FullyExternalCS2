@@ -1,7 +1,6 @@
 using System.IO;
 using System.Text.Json;
 using Keys = Process.NET.Native.Types.Keys;
-using Color = SharpDX.Color;
 
 namespace CS2Cheat.Utils;
 
@@ -20,6 +19,7 @@ public class ConfigManager
     public bool TeamCheck { get; set; }
     public string EspBoxColor { get; set; }
     public string SkeletonEspColor { get; set; }
+    public bool HeadCircleESP { get; set; }
 
 
     public static ConfigManager Load()
@@ -78,7 +78,8 @@ public class ConfigManager
             TriggerBotKey = Keys.LMenu,
             TeamCheck = true,
             EspBoxColor = "0xFF00FF00", // Green
-            SkeletonEspColor = "0xFFFF0000" // Red
+            SkeletonEspColor = "0xFFFF0000", // Red
+            HeadCircleESP = true
         };
     }
 }

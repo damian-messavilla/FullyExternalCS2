@@ -234,6 +234,51 @@ public class Graphics : ThreadedServiceBase
         DrawLine(color, screenVertices);
     }
 
+    public void DrawCircleWorld(Color color, Vector3 centerWorld, float radius, int segments = 32)
+    {
+        if (GameData.Player == null) return;
+
+        // Forward-Vektor aus Matrix extrahieren (Kamera-Richtung)
+        Matrix m = GameData.Player.MatrixViewProjectionViewport;
+        Vector3 forward = new Vector3(-m.M13, -m.M23, -m.M33);
+        forward.Normalize();
+
+        // Welt-Up-Vektor (fallback)
+        Vector3 worldUp = new(0, 0, 1);
+
+        // Falls forward fast parallel ist → anderen Up-Vektor verwenden
+        if (Math.Abs(Vector3.Dot(worldUp, forward)) > 0.9f)
+            worldUp = new Vector3(0, 1, 0);
+
+        // Orthogonales Koordinatensystem erzeugen
+        Vector3 right = Vector3.Normalize(Vector3.Cross(worldUp, forward));
+        Vector3 up = Vector3.Normalize(Vector3.Cross(forward, right));
+
+        float angleStep = (float)(2 * Math.PI / segments);
+        Vector2? lastPoint = null;
+
+        for (int i = 0; i <= segments; i++)
+        {
+            float angle = i * angleStep;
+
+            Vector3 worldPoint =
+                centerWorld +
+                right * (float)Math.Cos(angle) * radius +
+                up * (float)Math.Sin(angle) * radius;
+
+            var screen = GameData.Player.MatrixViewProjectionViewport.Transform(worldPoint);
+            if (screen.Z >= 1) continue;
+
+            Vector2 nextPoint = new(screen.X, screen.Y);
+
+            if (lastPoint != null)
+                DrawLine(color, lastPoint.Value, nextPoint);
+
+            lastPoint = nextPoint;
+        }
+    }
+
+
     public void DrawRectangle(Color color, Vector2 topLeft, Vector2 bottomRight)
     {
         var vertices = new[]

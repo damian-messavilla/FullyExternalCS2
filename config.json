@@ -8,7 +8,8 @@
   "TriggerBot": false,
   "AimBotKey": 1,
   "TriggerBotKey": 164,
-  "TeamCheck": false,
+  "TeamCheck": true,
   "EspBoxColor": "orange",
-  "SkeletonEspColor": "red"
+  "SkeletonEspColor": "red",
+  "HeadCircleESP": true
 }

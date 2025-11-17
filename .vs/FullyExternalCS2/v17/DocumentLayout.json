@@ -58,8 +58,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 8,
@@ -142,8 +146,7 @@
               "RelativeToolTip": "Features\\EspBox.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAAwHgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T13:26:34.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T13:26:34.677Z"
             },
             {
               "$type": "Document",
@@ -155,8 +158,7 @@
               "RelativeToolTip": "Features\\AimBot.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T16:07:19.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T16:07:19.278Z"
             },
             {
               "$type": "Document",
@@ -181,8 +183,7 @@
               "RelativeToolTip": "Features\\SkeletonEsp.cs",
               "ViewState": "AgIAADwAAAAAAAAAAAAuwEMAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:54:17.128Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T12:54:17.128Z"
             },
             {
               "$type": "Document",
@@ -194,8 +195,7 @@
               "RelativeToolTip": "Utils\\ConfigManager.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAAwBAAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T13:32:54.734Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T13:32:54.734Z"
             },
             {
               "$type": "Document",

@@ -93,7 +93,7 @@ public static class SkeletonEsp
 
     private static bool IsValidEntity(Entity entity, Player player)
     {
-        if(Config.TeamCheck && entity.Team == player.Team) return false;
+        if (Config.TeamCheck && entity.Team == player.Team) return false;
         return entity.IsAlive() &&
                entity.AddressBase != player.AddressBase;
     }
@@ -103,6 +103,17 @@ public static class SkeletonEsp
         var bonePositions = entity.BonePos;
         if (bonePositions == null) return;
 
+        //Head Circle
+        if (bonePositions.ContainsKey("head") && _config.HeadCircleESP)
+        {
+            var headPos = bonePositions["head"];
+
+            float radius = 5f;
+
+            graphics.DrawCircleWorld(color, headPos, 5f); //radius is 5f
+        }
+
+        //Drad bone connections
         foreach (var (startBone, endBone) in BoneConnections)
         {
             if (!bonePositions.ContainsKey(startBone) || !bonePositions.ContainsKey(endBone))

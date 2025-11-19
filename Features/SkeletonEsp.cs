@@ -1,6 +1,8 @@
 using CS2Cheat.Core.Data;
 using CS2Cheat.Data.Entity;
+using CS2Cheat.Graphics;
 using CS2Cheat.Utils;
+using SharpDX;
 using Color = SharpDX.Color;
 
 namespace CS2Cheat.Features;
@@ -84,19 +86,20 @@ public static class SkeletonEsp
         var player = graphics.GameData.Player;
         foreach (var entity in graphics.GameData.Entities)
         {
-            if (!IsValidEntity(entity, player)) continue;
+            if (!IsValidEntity(entity, player, graphics)) continue;
 
             DrawSkeleton(graphics, entity, color);
         }
     }
 
-
-    private static bool IsValidEntity(Entity entity, Player player)
+    private static bool IsValidEntity(Entity entity, Player player, Graphics.Graphics graphics)
     {
         if (Config.TeamCheck && entity.Team == player.Team) return false;
-        return entity.IsAlive() &&
-               entity.AddressBase != player.AddressBase;
+        if(Config.RangeCheck && !IsPlayerInRange(entity, player, Config.RangeForRangeCheck)) return false;
+
+        return entity.IsAlive() && entity.AddressBase != player.AddressBase;
     }
+
 
     private static void DrawSkeleton(Graphics.Graphics graphics, Entity entity, Color color)
     {
@@ -104,7 +107,7 @@ public static class SkeletonEsp
         if (bonePositions == null) return;
 
         //Head Circle
-        if (bonePositions.ContainsKey("head") && _config.HeadCircleESP)
+        if (bonePositions.ContainsKey("head") && Config.HeadCircleESP)
         {
             var headPos = bonePositions["head"];
 
@@ -122,4 +125,15 @@ public static class SkeletonEsp
             graphics.DrawLineWorld(color, bonePositions[startBone], bonePositions[endBone]);
         }
     }
+
+    private static bool IsPlayerInRange(Entity entity, Player player, float maxDistance)
+    {
+        if (entity.Origin == Vector3.Zero || player.Origin == Vector3.Zero)
+            return false;
+
+        float distance = Vector3.Distance(entity.Origin, player.Origin);
+
+        return distance <= maxDistance;
+    }
+
 }

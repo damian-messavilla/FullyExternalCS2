@@ -234,23 +234,23 @@ public class Graphics : ThreadedServiceBase
         DrawLine(color, screenVertices);
     }
 
-    public void DrawCircleWorld(Color color, Vector3 centerWorld, float radius, int segments = 32)
+    public void DrawCircleWorld(Color color, Vector3 centerWorld, float radius, int segments = 16)
     {
         if (GameData.Player == null) return;
 
-        // Forward-Vektor aus Matrix extrahieren (Kamera-Richtung)
+        // Forward-Vector from Matrix (Camera Direction)
         Matrix m = GameData.Player.MatrixViewProjectionViewport;
         Vector3 forward = new Vector3(-m.M13, -m.M23, -m.M33);
         forward.Normalize();
 
-        // Welt-Up-Vektor (fallback)
+        // Wrold-Up-Vector (fallback)
         Vector3 worldUp = new(0, 0, 1);
 
-        // Falls forward fast parallel ist → anderen Up-Vektor verwenden
+        // If forward fast is parallel -> use other Up-Vector
         if (Math.Abs(Vector3.Dot(worldUp, forward)) > 0.9f)
             worldUp = new Vector3(0, 1, 0);
 
-        // Orthogonales Koordinatensystem erzeugen
+        // Create an orthogonal coordinate system
         Vector3 right = Vector3.Normalize(Vector3.Cross(worldUp, forward));
         Vector3 up = Vector3.Normalize(Vector3.Cross(forward, right));
 

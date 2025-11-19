@@ -112,6 +112,7 @@ public static class EspBox
         {
             if (!entity.IsAlive() || entity.AddressBase == player.AddressBase) continue;
             if (Config.TeamCheck && entity.Team == player.Team) continue;
+            if (Config.RangeCheck && !IsPlayerInRange(entity, player, Config.RangeForRangeCheck)) continue;
 
             var boundingBox = GetEntityBoundingBox(graphics, entity);
             if (boundingBox == null) continue;
@@ -282,5 +283,15 @@ public static class EspBox
         var sizeMultiplier = 2f - entity.Health / 100f;
         var paddingVector = new Vector2(padding * sizeMultiplier);
         return (minPos - paddingVector, maxPos + paddingVector);
+    }
+
+    private static bool IsPlayerInRange(Entity entity, Player player, float maxDistance)
+    {
+        if (entity.Origin == Vector3.Zero || player.Origin == Vector3.Zero)
+            return false;
+
+        float distance = Vector3.Distance(entity.Origin, player.Origin);
+
+        return distance <= maxDistance;
     }
 }

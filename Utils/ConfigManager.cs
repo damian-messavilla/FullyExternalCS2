@@ -20,6 +20,9 @@ public class ConfigManager
     public string EspBoxColor { get; set; }
     public string SkeletonEspColor { get; set; }
     public bool HeadCircleESP { get; set; }
+    public bool VisibleOnly { get; set; }
+    public bool RangeCheck { get; set; }
+    public float RangeForRangeCheck { get; set; }
 
 
     public static ConfigManager Load()
@@ -79,7 +82,10 @@ public class ConfigManager
             TeamCheck = true,
             EspBoxColor = "0xFF00FF00", // Green
             SkeletonEspColor = "0xFFFF0000", // Red
-            HeadCircleESP = true
+            HeadCircleESP = true,
+            VisibleOnly = false,
+            RangeCheck = false,
+            RangeForRangeCheck = 20
         };
     }
 }

@@ -15,7 +15,7 @@ namespace CS2Cheat.Data.Entity
         public int Health { get; private set; }
         public Team Team { get; private set; }
 
-        protected Vector3 Origin { get; private set; }
+        public Vector3 Origin { get; private set; }
         public int ShotsFired { get; private set; }
 
         private IntPtr CurrentWeapon { get; set; }

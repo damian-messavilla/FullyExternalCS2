@@ -44,6 +44,7 @@ public class GameData : ThreadedServiceBase
         if (Entities != null)
             foreach (var entity in Entities)
                 entity.Update(GameProcess);
+
     }
 
     #endregion

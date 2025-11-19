@@ -95,7 +95,8 @@ public static class SkeletonEsp
     private static bool IsValidEntity(Entity entity, Player player, Graphics.Graphics graphics)
     {
         if (Config.TeamCheck && entity.Team == player.Team) return false;
-        if(Config.RangeCheck && !IsPlayerInRange(entity, player, Config.RangeForRangeCheck)) return false;
+        if (Config.RangeCheck && !IsPlayerInRange(entity, player, Config.RangeForRangeCheck)) return false;
+        if (Config.VisibleOnly && !entity.IsVisible) return false;
 
         return entity.IsAlive() && entity.AddressBase != player.AddressBase;
     }

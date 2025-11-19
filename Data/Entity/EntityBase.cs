@@ -13,6 +13,7 @@ namespace CS2Cheat.Data.Entity
 
         private bool LifeState { get; set; }
         public int Health { get; private set; }
+
         public Team Team { get; private set; }
 
         public Vector3 Origin { get; private set; }

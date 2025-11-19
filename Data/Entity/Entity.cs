@@ -25,6 +25,7 @@ public class Entity : EntityBase
     protected internal int FlashAlpha { get; private set; }
     public IReadOnlyDictionary<string, Vector3> BonePos => _bonePositions;
     public int Id { get; }
+    public bool IsVisible { get; set; }
 
     public override bool IsAlive()
     {
@@ -63,6 +64,12 @@ public class Entity : EntityBase
 
         _dormant = gameProcess.Process != null && gameProcess.Process.Read<bool>(AddressBase + Offsets.m_bDormant);
         IsSpotted = gameProcess.Process?.Read<bool>(AddressBase + Offsets.m_entitySpottedState + 0x8) ?? false;
+
+        var localController = gameProcess.ModuleClient.Read<IntPtr>(Offsets.dwLocalPlayerController);
+        var localPlayerPawn = gameProcess.Process.Read<int>(localController + Offsets.m_hPawn);
+        var localPlayerIndex = (localPlayerPawn & 0x7FFF) >> 9;
+        IsVisible = UpdateVisibility(gameProcess, localPlayerIndex);
+
         IsInScope = gameProcess.Process?.Read<int>(AddressBase + Offsets.m_bIsScoped) ?? 0;
         FlashAlpha = gameProcess.Process?.Read<int>(AddressBase + Offsets.m_flFlashDuration) ?? 0;
         Name = gameProcess.Process != null
@@ -94,5 +101,27 @@ public class Entity : EntityBase
             return false;
         }
     }
+
+    public bool UpdateVisibility(GameProcess gameProcess, int localPlayerIndex)
+    {
+        if (gameProcess?.Process == null)
+            return false;
+
+        try
+        {
+            // m_entitySpottedState struct
+            IntPtr spottedState = AddressBase + Offsets.m_entitySpottedState;
+
+            // +0xC = spottedByMask (int)
+            int spottedMask = gameProcess.Process.Read<int>(spottedState + 0xC);
+
+            return (spottedMask & (1 << localPlayerIndex)) != 0;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
 
 }

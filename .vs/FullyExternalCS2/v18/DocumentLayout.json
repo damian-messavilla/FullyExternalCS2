@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\damian\\FullyExternalCS2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\features\\espbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:features\\espbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\features\\skeletonesp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:features\\skeletonesp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\entity\\entitybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:data\\entity\\entitybase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\utils\\configmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:utils\\configmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:data\\entity\\entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\entity\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:data\\entity\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\features\\skeletonesp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:features\\skeletonesp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\features\\espbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:features\\espbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\game\\gamedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:data\\game\\gamedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\game\\gameprocess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,8 +35,16 @@
       "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\data\\entity\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:data\\entity\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\graphics\\graphics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:graphics\\graphics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|c:\\users\\damian\\fullyexternalcs2\\utils\\configmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E88C325-4A77-B4D0-3740-696CF147253D}|CS2Cheat.csproj|solutionrelative:utils\\configmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -60,7 +64,7 @@
               "RelativeDocumentMoniker": "Graphics\\Graphics.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Graphics\\Graphics.cs",
               "RelativeToolTip": "Graphics\\Graphics.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAwwO0AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAALYAAAAAAAAAAAAowO0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-12T17:41:44.444Z",
               "IsPinned": true,
@@ -68,52 +72,52 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "GameData.cs",
+              "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Game\\GameData.cs",
+              "RelativeDocumentMoniker": "Data\\Game\\GameData.cs",
+              "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Game\\GameData.cs",
+              "RelativeToolTip": "Data\\Game\\GameData.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAiwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T17:12:04.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SkeletonEsp.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Features\\SkeletonEsp.cs",
               "RelativeDocumentMoniker": "Features\\SkeletonEsp.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Features\\SkeletonEsp.cs",
               "RelativeToolTip": "Features\\SkeletonEsp.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAYwGEAAABqAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAwF8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-12T17:41:44.483Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "EspBox.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Features\\EspBox.cs",
               "RelativeDocumentMoniker": "Features\\EspBox.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Features\\EspBox.cs",
               "RelativeToolTip": "Features\\EspBox.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAA4wHIAAABrAAAAAAAAAA==",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAAHMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T16:53:47.781Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EntityBase.cs",
-              "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\EntityBase.cs",
-              "RelativeDocumentMoniker": "Data\\Entity\\EntityBase.cs",
-              "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\EntityBase.cs",
-              "RelativeToolTip": "Data\\Entity\\EntityBase.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T16:48:04.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Entity.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Entity.cs",
               "RelativeDocumentMoniker": "Data\\Entity\\Entity.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Entity.cs",
               "RelativeToolTip": "Data\\Entity\\Entity.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAswFQAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAABoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T16:44:56.454Z",
               "EditorCaption": ""
@@ -121,6 +125,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Player.cs",
+              "RelativeDocumentMoniker": "Data\\Entity\\Player.cs",
+              "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Player.cs",
+              "RelativeToolTip": "Data\\Entity\\Player.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAswFkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T16:11:06.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EntityBase.cs",
+              "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\EntityBase.cs",
+              "RelativeDocumentMoniker": "Data\\Entity\\EntityBase.cs",
+              "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\EntityBase.cs",
+              "RelativeToolTip": "Data\\Entity\\EntityBase.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T16:48:04.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -133,46 +163,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Offsets.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Utils\\Offsets.cs",
               "RelativeDocumentMoniker": "Utils\\Offsets.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Utils\\Offsets.cs",
               "RelativeToolTip": "Utils\\Offsets.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAQwAoAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAKMAAAAAAAAAAADwv6wAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-18T17:05:55.148Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "GameProcess.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Game\\GameProcess.cs",
               "RelativeDocumentMoniker": "Data\\Game\\GameProcess.cs",
               "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Game\\GameProcess.cs",
               "RelativeToolTip": "Data\\Game\\GameProcess.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAIwAcAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-18T17:03:49.271Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Player.cs",
-              "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Player.cs",
-              "RelativeDocumentMoniker": "Data\\Entity\\Player.cs",
-              "ToolTip": "C:\\Users\\damian\\FullyExternalCS2\\Data\\Entity\\Player.cs",
-              "RelativeToolTip": "Data\\Entity\\Player.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwFUAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T16:11:06.422Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "ConfigManager.cs",
               "DocumentMoniker": "C:\\Users\\damian\\FullyExternalCS2\\Utils\\ConfigManager.cs",
               "RelativeDocumentMoniker": "Utils\\ConfigManager.cs",
@@ -180,8 +197,7 @@
               "RelativeToolTip": "Utils\\ConfigManager.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAcwBoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T18:22:14.534Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-17T18:22:14.534Z"
             }
           ]
         }

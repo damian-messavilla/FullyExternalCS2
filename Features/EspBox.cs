@@ -113,6 +113,7 @@ public static class EspBox
             if (!entity.IsAlive() || entity.AddressBase == player.AddressBase) continue;
             if (Config.TeamCheck && entity.Team == player.Team) continue;
             if (Config.RangeCheck && !IsPlayerInRange(entity, player, Config.RangeForRangeCheck)) continue;
+            if (Config.VisibleOnly && !entity.IsVisible) continue;
 
             var boundingBox = GetEntityBoundingBox(graphics, entity);
             if (boundingBox == null) continue;

@@ -8,8 +8,11 @@
   "TriggerBot": false,
   "AimBotKey": 1,
   "TriggerBotKey": 164,
-  "TeamCheck": true,
+  "TeamCheck": false,
   "EspBoxColor": "orange",
   "SkeletonEspColor": "red",
-  "HeadCircleESP": true
+  "HeadCircleESP": true,
+  "VisibleOnly": true,
+  "RangeCheck": true,
+  "RangeForRangeCheck": 1000
 }

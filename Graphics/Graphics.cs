@@ -182,6 +182,7 @@ public class Graphics : ThreadedServiceBase
         if (features.Esp) EspBox.Draw(this);
         if (features.SkeletonEsp) SkeletonEsp.Draw(this);
         if (features.BombTimer) BombTimer.Draw(this);
+        if (features.SpectatorList) SpectatorList.Draw(this);
     }
 
     private void RenderVertices()

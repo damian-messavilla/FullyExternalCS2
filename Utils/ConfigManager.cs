@@ -23,6 +23,7 @@ public class ConfigManager
     public bool VisibleOnly { get; set; }
     public bool RangeCheck { get; set; }
     public float RangeForRangeCheck { get; set; }
+    public bool SpectatorList { get; set; }
 
 
     public static ConfigManager Load()
@@ -85,7 +86,8 @@ public class ConfigManager
             HeadCircleESP = true,
             VisibleOnly = false,
             RangeCheck = false,
-            RangeForRangeCheck = 20
+            RangeForRangeCheck = 1000,
+            SpectatorList = true
         };
     }
 }

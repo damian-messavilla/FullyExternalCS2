@@ -1911,6 +1911,7 @@ public class Fields
     public int m_nSurvivalTeamNumber { get; set; }
     public int m_nWhichBombZone { get; set; }
     public int m_pClippingWeapon { get; set; }
+    public int m_pObserverServices { get; set; }
     public int m_pPingServices { get; set; }
     public int m_pViewModelServices { get; set; }
     public int m_previousPlayerState { get; set; }
@@ -3576,6 +3577,7 @@ public class Fields
     public int m_flObserverChaseDistanceCalcTime { get; set; }
     public int m_hObserverTarget { get; set; }
     public int m_iObserverLastMode { get; set; }
+    //public int m_hObserverTarget { get; set; }
     public int m_iObserverMode { get; set; }
     public int m_hActiveWeapon { get; set; }
     public int m_hLastWeapon { get; set; }
@@ -3897,7 +3899,7 @@ public class Fields
     public int m_pFlashlightServices { get; set; }
     public int m_pItemServices { get; set; }
     public int m_pMovementServices { get; set; }
-    public int m_pObserverServices { get; set; }
+    //public int m_pObserverServices { get; set; }
     public int m_pUseServices { get; set; }
     public int m_pWaterServices { get; set; }
     public int m_pWeaponServices { get; set; }

@@ -31,6 +31,8 @@ public class Program :
     private AimBot AimBot { get; set; } = null!;
 
     private BombTimer BombTimer { get; set; } = null!;
+    
+    private SpectatorList SpectatorList { get; set; } = null!;
 
     public void Dispose()
     {
@@ -54,6 +56,9 @@ public class Program :
 
         BombTimer.Dispose();
         BombTimer = default!;
+
+        SpectatorList.Dispose();
+        SpectatorList = default!;
     }
 
     public static void Main()
@@ -85,7 +90,10 @@ public class Program :
 
         BombTimer = new BombTimer(Graphics);
         if (features.BombTimer) BombTimer.Start();
+        
+        SpectatorList = new SpectatorList(GameProcess, GameData);
+        if (features.SpectatorList) SpectatorList.Start();
 
-        SetWindowDisplayAffinity(WindowOverlay!.Window.Handle, 0x00000011); //obs bypass
+        //SetWindowDisplayAffinity(WindowOverlay!.Window.Handle, 0x00000011); //obs bypass
     }
 }

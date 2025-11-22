@@ -279,6 +279,57 @@ public class Graphics : ThreadedServiceBase
         }
     }
 
+    public void DrawFilledCircleWorld(Color color, Vector3 centerWorld, float radiusWorld, int segments = 16)
+    {
+        if (GameData.Player == null) return;
+
+        // Project center
+        var centerProj = GameData.Player.MatrixViewProjectionViewport.Transform(centerWorld);
+        if (centerProj.Z >= 1) return;
+        var center = new Vector2(centerProj.X, centerProj.Y);
+
+        // Compute screen-space radius:
+        // Use same world-space right/up used by DrawCircleWorld to find a point on the circumference
+        Matrix m = GameData.Player.MatrixViewProjectionViewport;
+        Vector3 forward = new Vector3(-m.M13, -m.M23, -m.M33);
+        forward.Normalize();
+        Vector3 worldUp = new Vector3(0, 0, 1);
+        if (Math.Abs(Vector3.Dot(worldUp, forward)) > 0.9f)
+            worldUp = new Vector3(0, 1, 0);
+
+        Vector3 right = Vector3.Normalize(Vector3.Cross(worldUp, forward));
+        Vector3 up = Vector3.Normalize(Vector3.Cross(forward, right));
+
+        var sampleWorld = centerWorld + right * radiusWorld;
+        var sampleProj = GameData.Player.MatrixViewProjectionViewport.Transform(sampleWorld);
+        if (sampleProj.Z >= 1) return;
+        var sample = new Vector2(sampleProj.X, sampleProj.Y);
+
+        float pixelRadius = Vector2.Distance(center, sample);
+        if (pixelRadius <= 0.5f) return;
+
+        int rMax = (int)Math.Ceiling(pixelRadius);
+
+        // Draw concentric outlines from outer radius down to 0 (step 1 pixel).
+        // For small radii (5..15 px) this is cheap.
+        float angleStep = (float)(2 * Math.PI / segments);
+
+        for (int rr = rMax; rr >= 0; rr--)
+        {
+            for (int i = 0; i < segments; i++)
+            {
+                float a1 = i * angleStep;
+                float a2 = (i + 1) * angleStep;
+
+                var p1 = new Vector2(center.X + (float)Math.Cos(a1) * rr, center.Y + (float)Math.Sin(a1) * rr);
+                var p2 = new Vector2(center.X + (float)Math.Cos(a2) * rr, center.Y + (float)Math.Sin(a2) * rr);
+
+                // Draw each segment as a line pair (DrawLine expects even number of verts; for 2 points it's fine)
+                DrawLine(color, p1, p2);
+            }
+        }
+    }
+
 
     public void DrawRectangle(Color color, Vector2 topLeft, Vector2 bottomRight)
     {

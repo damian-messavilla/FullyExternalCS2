@@ -12,6 +12,8 @@
   "EspBoxColor": "orange",
   "SkeletonEspColor": "red",
   "HeadCircleESP": true,
+  "HeadCircleFilled": false,
+  "HeadCircleColor": "blue",
   "VisibleOnly": false,
   "RangeCheck": false,
   "RangeForRangeCheck": 1000,

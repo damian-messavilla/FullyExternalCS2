@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text.Json;
 using Keys = Process.NET.Native.Types.Keys;
+using Color = SharpDX.Color;
 
 namespace CS2Cheat.Utils;
 
@@ -20,10 +21,14 @@ public class ConfigManager
     public string EspBoxColor { get; set; }
     public string SkeletonEspColor { get; set; }
     public bool HeadCircleESP { get; set; }
+    public bool HeadCircleFilled { get; set; }
+    public string HeadCircleColor { get; set; }
     public bool VisibleOnly { get; set; }
     public bool RangeCheck { get; set; }
     public float RangeForRangeCheck { get; set; }
     public bool SpectatorList { get; set; }
+    
+
 
 
     public static ConfigManager Load()
@@ -84,10 +89,49 @@ public class ConfigManager
             EspBoxColor = "0xFF00FF00", // Green
             SkeletonEspColor = "0xFFFF0000", // Red
             HeadCircleESP = true,
+            HeadCircleFilled = false,
+            HeadCircleColor = "0xFFFF0000", // Red
             VisibleOnly = false,
             RangeCheck = false,
             RangeForRangeCheck = 1000,
             SpectatorList = true
         };
     }
+
+    public static SharpDX.Color ParseColor(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return Color.White;
+
+        try
+        {
+            // Hex ("0xFFFF0000" or "FF0000FF")
+            if (input.StartsWith("0x") || input.All(c => "0123456789ABCDEFabcdef".Contains(c)))
+                return Color.FromBgra(uint.Parse(input.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber));
+
+            // Color names
+            switch (input.ToLower())
+            {
+                case "red": return Color.Red;
+                case "green": return Color.Green;
+                case "blue": return Color.Blue;
+                case "yellow": return Color.Yellow;
+                case "cyan": return Color.Cyan;
+                case "magenta": return Color.Magenta;
+                case "black": return Color.Black;
+                case "white": return Color.White;
+                case "orange": return new Color(255, 165, 0);
+                case "purple": return new Color(128, 0, 128);
+                case "pink": return new Color(255, 192, 203);
+                case "gray":
+                case "grey": return new Color(128, 128, 128);
+                default: return Color.White;
+            }
+        }
+        catch
+        {
+            return Color.White;
+        }
+    }
+
 }

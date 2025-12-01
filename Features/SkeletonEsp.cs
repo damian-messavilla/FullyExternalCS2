@@ -96,9 +96,9 @@ public static class SkeletonEsp
             float radius = 5f;
 
             if (Config.HeadCircleFilled)
-                graphics.DrawFilledCircleWorld(HeadColor, headPos, radius, 16);
+                graphics.DrawFilledCircleWorld(HeadColor, headPos, radius, 48);
             else
-                graphics.DrawCircleWorld(HeadColor, headPos, radius, 16);
+                graphics.DrawCircleWorld(HeadColor, headPos, radius, 32);
         }
 
         // Draw Skeleton Bones

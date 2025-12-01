@@ -29,6 +29,10 @@ public class Graphics : ThreadedServiceBase
     private Device? _device;
     private bool _isDisposed;
 
+    private VertexDeclaration? _vertexDecl;
+    private VertexBuffer? _vertexBuffer;
+    private int _vertexBufferSize = 20000; // default size (will auto-expand)
+
     public Graphics(GameProcess gameProcess, GameData gameData, WindowOverlay windowOverlay)
     {
         WindowOverlay = windowOverlay ?? throw new ArgumentNullException(nameof(windowOverlay));
@@ -67,6 +71,11 @@ public class Graphics : ThreadedServiceBase
         _device = new Device(new Direct3D(), 0, DeviceType.Hardware, WindowOverlay.Window.Handle,
             CreateFlags.HardwareVertexProcessing, parameters);
 
+        // Create persistent structures
+        _vertexDecl = new VertexDeclaration(_device, VertexElements);
+        _vertexBuffer = new VertexBuffer(_device, _vertexBufferSize * 20, Usage.WriteOnly,
+            VertexFormat.None, Pool.Managed);
+
         InitializeFonts();
     }
 
@@ -84,7 +93,7 @@ public class Graphics : ThreadedServiceBase
             EnableAutoDepthStencil = true,
             AutoDepthStencilFormat = Format.D16,
             PresentationInterval = PresentInterval.Immediate,
-            MultiSampleType = MultisampleType.TwoSamples
+            MultiSampleType = MultisampleType.None
         };
     }
 
@@ -185,21 +194,32 @@ public class Graphics : ThreadedServiceBase
         if (features.SpectatorList) SpectatorList.Draw(this);
     }
 
+    private void EnsureVertexBufferSize(int required)
+    {
+        if (required <= _vertexBufferSize) return;
+
+        _vertexBufferSize = (int)(required * 1.5f);
+        _vertexBuffer?.Dispose();
+
+        _vertexBuffer = new VertexBuffer(_device, _vertexBufferSize * 20, Usage.WriteOnly,
+            VertexFormat.None, Pool.Managed);
+    }
+
     private void RenderVertices()
     {
-        if (_vertices.Count == 0) return;
+        if (_vertices.Count == 0 || _device == null || _vertexBuffer == null) return;
 
-        if (_device == null) return;
+        EnsureVertexBufferSize(_vertices.Count);
 
-        using var vertices = new VertexBuffer(_device, _vertices.Count * 20, Usage.WriteOnly, VertexFormat.None,
-            Pool.Managed);
-        vertices.Lock(0, 0, LockFlags.None).WriteRange(_vertices.ToArray());
-        vertices.Unlock();
+        DataStream stream = _vertexBuffer.Lock(0, _vertices.Count * 20, LockFlags.None);
+        stream.WriteRange(_vertices.ToArray());
+        _vertexBuffer.Unlock();
 
-        _device.SetStreamSource(0, vertices, 0, 20);
-        using var vertexDecl = new VertexDeclaration(_device, VertexElements);
-        _device.VertexDeclaration = vertexDecl;
-        _device.DrawPrimitives(PrimitiveType.LineList, 0, _vertices.Count / 2);
+        _device.SetStreamSource(0, _vertexBuffer, 0, 20);
+        _device.VertexDeclaration = _vertexDecl;
+
+        int primitiveCount = _vertices.Count / 2;
+        _device.DrawPrimitives(PrimitiveType.LineList, 0, primitiveCount);
     }
 
     private void DisposeResources()
@@ -207,6 +227,8 @@ public class Graphics : ThreadedServiceBase
         FontAzonix64?.Dispose();
         FontConsolas32?.Dispose();
         Undefeated?.Dispose();
+        _vertexBuffer?.Dispose();
+        _vertexDecl?.Dispose();
         _device?.Dispose();
     }
 
@@ -226,13 +248,16 @@ public class Graphics : ThreadedServiceBase
     {
         if (GameData.Player == null) return;
 
-        var screenVertices = verticesWorld
-            .Select(v => GameData.Player.MatrixViewProjectionViewport.Transform(v))
-            .Where(v => v.Z < 1)
-            .Select(v => new Vector2(v.X, v.Y))
-            .ToArray();
+        for (int i = 0; i < verticesWorld.Length - 1; i++)
+        {
+            var s1 = GameData.Player.MatrixViewProjectionViewport.Transform(verticesWorld[i]);
+            if (s1.Z >= 1) continue;
 
-        DrawLine(color, screenVertices);
+            var s2 = GameData.Player.MatrixViewProjectionViewport.Transform(verticesWorld[i + 1]);
+            if (s2.Z >= 1) continue;
+
+            DrawLine(color, new Vector2(s1.X, s1.Y), new Vector2(s2.X, s2.Y));
+        }
     }
 
     public void DrawCircleWorld(Color color, Vector3 centerWorld, float radius, int segments = 16)
@@ -279,69 +304,57 @@ public class Graphics : ThreadedServiceBase
         }
     }
 
-    public void DrawFilledCircleWorld(Color color, Vector3 centerWorld, float radiusWorld, int segments = 16)
+    // Efficient triangle-fan circle fill
+    public void DrawFilledCircleWorld(Color color, Vector3 centerWorld, float radius, int segments = 48)
     {
         if (GameData.Player == null) return;
 
-        // Project center
-        var centerProj = GameData.Player.MatrixViewProjectionViewport.Transform(centerWorld);
-        if (centerProj.Z >= 1) return;
-        var center = new Vector2(centerProj.X, centerProj.Y);
+        var center = GameData.Player.MatrixViewProjectionViewport.Transform(centerWorld);
+        if (center.Z >= 1) return;
 
-        // Compute screen-space radius:
-        // Use same world-space right/up used by DrawCircleWorld to find a point on the circumference
+        var center2 = new Vector2(center.X, center.Y);
+
         Matrix m = GameData.Player.MatrixViewProjectionViewport;
         Vector3 forward = new Vector3(-m.M13, -m.M23, -m.M33);
         forward.Normalize();
-        Vector3 worldUp = new Vector3(0, 0, 1);
-        if (Math.Abs(Vector3.Dot(worldUp, forward)) > 0.9f)
-            worldUp = new Vector3(0, 1, 0);
 
-        Vector3 right = Vector3.Normalize(Vector3.Cross(worldUp, forward));
-        Vector3 up = Vector3.Normalize(Vector3.Cross(forward, right));
+        Vector3 up = new(0, 0, 1);
+        if (Math.Abs(Vector3.Dot(up, forward)) > 0.9f)
+            up = new(0, 1, 0);
 
-        var sampleWorld = centerWorld + right * radiusWorld;
-        var sampleProj = GameData.Player.MatrixViewProjectionViewport.Transform(sampleWorld);
-        if (sampleProj.Z >= 1) return;
-        var sample = new Vector2(sampleProj.X, sampleProj.Y);
+        Vector3 right = Vector3.Normalize(Vector3.Cross(up, forward));
+        up = Vector3.Normalize(Vector3.Cross(forward, right));
 
-        float pixelRadius = Vector2.Distance(center, sample);
-        if (pixelRadius <= 0.5f) return;
+        List<Vector2> pts = new();
+        float step = (float)(2 * Math.PI / segments);
 
-        int rMax = (int)Math.Ceiling(pixelRadius);
-
-        // Draw concentric outlines from outer radius down to 0 (step 1 pixel).
-        // For small radii (5..15 px) this is cheap.
-        float angleStep = (float)(2 * Math.PI / segments);
-
-        for (int rr = rMax; rr >= 0; rr--)
+        for (int i = 0; i <= segments; i++)
         {
-            for (int i = 0; i < segments; i++)
-            {
-                float a1 = i * angleStep;
-                float a2 = (i + 1) * angleStep;
+            float a = i * step;
 
-                var p1 = new Vector2(center.X + (float)Math.Cos(a1) * rr, center.Y + (float)Math.Sin(a1) * rr);
-                var p2 = new Vector2(center.X + (float)Math.Cos(a2) * rr, center.Y + (float)Math.Sin(a2) * rr);
+            var worldPoint = centerWorld +
+                             right * (float)Math.Cos(a) * radius +
+                             up * (float)Math.Sin(a) * radius;
 
-                // Draw each segment as a line pair (DrawLine expects even number of verts; for 2 points it's fine)
-                DrawLine(color, p1, p2);
-            }
+            var p = GameData.Player.MatrixViewProjectionViewport.Transform(worldPoint);
+            if (p.Z >= 1) continue;
+
+            pts.Add(new Vector2(p.X, p.Y));
+        }
+
+        // Filled: connect center → p[i] → p[i+1]
+        for (int i = 0; i < pts.Count - 1; i++)
+        {
+            DrawLine(color, center2, pts[i]);
+            DrawLine(color, pts[i], pts[i + 1]);
         }
     }
 
-
     public void DrawRectangle(Color color, Vector2 topLeft, Vector2 bottomRight)
     {
-        var vertices = new[]
-        {
-            topLeft,
-            new Vector2(bottomRight.X, topLeft.Y),
-            bottomRight,
-            new Vector2(topLeft.X, bottomRight.Y),
-            topLeft
-        };
-
-        for (var i = 0; i < vertices.Length - 1; i++) DrawLine(color, vertices[i], vertices[i + 1]);
+        DrawLine(color, topLeft, new Vector2(bottomRight.X, topLeft.Y));
+        DrawLine(color, new Vector2(bottomRight.X, topLeft.Y), bottomRight);
+        DrawLine(color, bottomRight, new Vector2(topLeft.X, bottomRight.Y));
+        DrawLine(color, new Vector2(topLeft.X, bottomRight.Y), topLeft);
     }
 }

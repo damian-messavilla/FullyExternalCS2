@@ -1,6 +1,8 @@
-# FullyExternalCS2 v2.0
+# FullyExternalCS2 v2.0 (Forked & Enhanced)
 
 ![menu](assets/photo.png)
+
+> **Note:** This repository is a **fork** of the original FullyExternalCS2 by sweeperxz. We have heavily modified and improved this version with massive performance boosts, UI enhancements, offset bugfixes, and brand new tactical features.
 
 FullyExternalCS2 v2.0 is a refreshed external CS2 project with a new ImGui overlay, built-in menu, live configuration, updated visuals, RCS improvements, Bomb Timer, Vote Teller, and cleaner feature control directly from the overlay.
 
@@ -22,6 +24,25 @@ The main focus of this version is the new in-game menu: most features no longer 
 - Bomb Timer update
 - New Vote Teller feature
 - Auto-loaded offsets from cs2-dumper
+
+## 🚀 Fork Additions & Improvements
+
+We have introduced several crucial updates to make this cheat faster, safer, and more feature-rich:
+
+**Performance Optimizations:**
+- **Zero-Cost Strings:** Re-wrote the entity memory reader to cache player names upon initialization instead of polling `ReadString()` every frame.
+- **Render-Thread Offloading:** Moved heavy memory-reading logic (e.g., `ObserverTarget`) out of the ImGui draw loop and into the background `GameData` update thread, massively boosting overlay FPS.
+
+**New Features:**
+- **Global Visuals Toggle:** Added a master switch in the UI to toggle all visual/ESP features instantly.
+- **Smart Bomb Timer:** The bomb timer now intelligently compares remaining explosion time with defuse time. It dynamically shifts colors (Green = Safe to Defuse, Red = Run away!).
+- **Sniper No-Scope Crosshair:** Added a centered dot that *only* appears when wielding a sniper rifle (AWP, Scout, SCAR, G3SG1) and disappears instantly when scoping in.
+- **Spectator Network:** Upgraded the spectator list. When you are dead and spectating someone, you can now see exactly who is spectating *them*.
+- **Clean UI:** Simplified text layouts to keep the overlay stealthy and clutter-free (e.g. `Spectators (X)`).
+
+**Critical Bug Fixes:**
+- **Dynamic Offset Patches:** Repaired broken `m_bIsScoped` and `m_pClippingWeapon` offset chains caused by recent CS2 updates. Weapons and scope states are now resolved flawlessly via the `m_pWeaponServices -> m_hActiveWeapon` handle chain.
+- Fixed ESP weapon names and Aimbot Grenade-Checks.
 
 ## Menu
 

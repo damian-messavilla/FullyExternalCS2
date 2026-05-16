@@ -33,6 +33,8 @@ public abstract class Offsets
     public static int m_entitySpottedState;
     public static int m_Item;
     public static int m_pClippingWeapon;
+    public static int m_pWeaponServices;
+    public static int m_hActiveWeapon;
     public static int m_AttributeManager;
     public static int m_iItemDefinitionIndex;
     public static int m_bIsScoped;
@@ -46,6 +48,8 @@ public abstract class Offsets
     public static int m_flDefuseCountDown;
     public static int m_flC4Blow;
     public static int m_bBeingDefused;
+    public static int m_pObserverServices;
+    public static int m_hObserverTarget;
     public const nint m_nCurrentTickThisFrame = 0x34;
 
     public static readonly Dictionary<string, int> Bones = new()
@@ -114,9 +118,13 @@ public abstract class Offsets
                 sourceDataClient.clientdll.classes.C_EconEntity.fields.m_AttributeManager;
             destData.m_iItemDefinitionIndex =
                 sourceDataClient.clientdll.classes.C_EconItemView.fields.m_iItemDefinitionIndex;
-            destData.m_bIsScoped = sourceDataClient.clientdll.classes.C_CSPlayerPawnBase.fields.m_bIsScoped;
+            destData.m_bIsScoped = sourceDataClient.clientdll.classes.C_CSPlayerPawn.fields.m_bIsScoped;
             destData.m_flFlashDuration =
                 sourceDataClient.clientdll.classes.C_CSPlayerPawnBase.fields.m_flFlashDuration;
+            destData.m_pWeaponServices =
+                sourceDataClient.clientdll.classes.C_BasePlayerPawn.fields.m_pWeaponServices;
+            destData.m_hActiveWeapon =
+                sourceDataClient.clientdll.classes.CPlayer_WeaponServices.fields.m_hActiveWeapon;
             destData.m_iszPlayerName =
                 sourceDataClient.clientdll.classes.CBasePlayerController.fields.m_iszPlayerName;
             destData.m_nBombSite = sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_nBombSite;
@@ -127,6 +135,8 @@ public abstract class Offsets
                 sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_flDefuseCountDown;
             destData.m_flC4Blow = sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_flC4Blow;
             destData.m_bBeingDefused = sourceDataClient.clientdll.classes.C_PlantedC4.fields.m_bBeingDefused;
+            destData.m_pObserverServices = sourceDataClient.clientdll.classes.C_BasePlayerPawn.fields.m_pObserverServices;
+            destData.m_hObserverTarget = sourceDataClient.clientdll.classes.CPlayer_ObserverServices.fields.m_hObserverTarget;
 
 
             UpdateStaticFields(destData);
@@ -174,6 +184,8 @@ public abstract class Offsets
         m_iItemDefinitionIndex = data.m_iItemDefinitionIndex;
         m_bIsScoped = data.m_bIsScoped;
         m_flFlashDuration = data.m_flFlashDuration;
+        m_pWeaponServices = data.m_pWeaponServices;
+        m_hActiveWeapon = data.m_hActiveWeapon;
         m_iszPlayerName = data.m_iszPlayerName;
         dwPlantedC4 = data.dwPlantedC4;
         dwGlobalVars = data.dwGlobalVars;
@@ -183,6 +195,8 @@ public abstract class Offsets
         m_flDefuseCountDown = data.m_flDefuseCountDown;
         m_flC4Blow = data.m_flC4Blow;
         m_bBeingDefused = data.m_bBeingDefused;
+        m_pObserverServices = data.m_pObserverServices;
+        m_hObserverTarget = data.m_hObserverTarget;
     }
 
     #endregion

@@ -205,15 +205,14 @@ public class OverlayRenderer : Overlay
 
     void TabVisuals()
     {
+        SectionHeader("Master");
+        var enableVis = _config.EnableVisuals;
+        if (Toggle("Enable Visuals", ref enableVis)) { _config.EnableVisuals = enableVis; ConfigManager.UpdateCache(_config); }
+        
+        ImGui.Spacing();
         SectionHeader("ESP");
         var espBox = _config.EspBox;
         if (Toggle("ESP Box", ref espBox)) { _config.EspBox = espBox; ConfigManager.UpdateCache(_config); }
-        var espName = _config.EspName;
-        if (Toggle("Name", ref espName)) { _config.EspName = espName; ConfigManager.UpdateCache(_config); }
-        var espWeapon = _config.EspWeapon;
-        if (Toggle("Weapon", ref espWeapon)) { _config.EspWeapon = espWeapon; ConfigManager.UpdateCache(_config); }
-        var espFlags = _config.EspFlags;
-        if (Toggle("Flags", ref espFlags)) { _config.EspFlags = espFlags; ConfigManager.UpdateCache(_config); }
 
         var boxColorVec = new Vector4(_config.EspBoxColor[0], _config.EspBoxColor[1], _config.EspBoxColor[2], _config.EspBoxColor[3]);
         if (ImGui.ColorEdit4("Box Color", ref boxColorVec))
@@ -225,10 +224,57 @@ public class OverlayRenderer : Overlay
             ConfigManager.UpdateCache(_config);
         }
 
+        var espName = _config.EspName;
+        if (Toggle("Name", ref espName)) { _config.EspName = espName; ConfigManager.UpdateCache(_config); }
+
+        var nameColorVec = new Vector4(_config.EspNameColor[0], _config.EspNameColor[1], _config.EspNameColor[2], _config.EspNameColor[3]);
+        if (ImGui.ColorEdit4("Name Color", ref nameColorVec))
+        {
+            _config.EspNameColor[0] = nameColorVec.X;
+            _config.EspNameColor[1] = nameColorVec.Y;
+            _config.EspNameColor[2] = nameColorVec.Z;
+            _config.EspNameColor[3] = nameColorVec.W;
+            ConfigManager.UpdateCache(_config);
+        }
+
+        var espWeapon = _config.EspWeapon;
+        if (Toggle("Weapon", ref espWeapon)) { _config.EspWeapon = espWeapon; ConfigManager.UpdateCache(_config); }
+        var espFlags = _config.EspFlags;
+        if (Toggle("Flags", ref espFlags)) { _config.EspFlags = espFlags; ConfigManager.UpdateCache(_config); }
+
+        ImGui.Spacing();
+        SectionHeader("Skeleton");
         var skeletonEsp = _config.SkeletonEsp;
         if (Toggle("Skeleton", ref skeletonEsp)) _config.SkeletonEsp = skeletonEsp;
+
+        var skelColorVec = new Vector4(_config.SkeletonEspColor[0], _config.SkeletonEspColor[1], _config.SkeletonEspColor[2], _config.SkeletonEspColor[3]);
+        if (ImGui.ColorEdit4("Skeleton Color", ref skelColorVec))
+        {
+            _config.SkeletonEspColor[0] = skelColorVec.X;
+            _config.SkeletonEspColor[1] = skelColorVec.Y;
+            _config.SkeletonEspColor[2] = skelColorVec.Z;
+            _config.SkeletonEspColor[3] = skelColorVec.W;
+            ConfigManager.UpdateCache(_config);
+        }
+
+        var headCircle = _config.SkeletonHeadCircle;
+        if (Toggle("Head Circle", ref headCircle)) _config.SkeletonHeadCircle = headCircle;
+
+        var headColorVec = new Vector4(_config.SkeletonHeadCircleColor[0], _config.SkeletonHeadCircleColor[1], _config.SkeletonHeadCircleColor[2], _config.SkeletonHeadCircleColor[3]);
+        if (ImGui.ColorEdit4("Head Color", ref headColorVec))
+        {
+            _config.SkeletonHeadCircleColor[0] = headColorVec.X;
+            _config.SkeletonHeadCircleColor[1] = headColorVec.Y;
+            _config.SkeletonHeadCircleColor[2] = headColorVec.Z;
+            _config.SkeletonHeadCircleColor[3] = headColorVec.W;
+            ConfigManager.UpdateCache(_config);
+        }
+
         var espAimCrosshair = _config.EspAimCrosshair;
-        if (Toggle("Aim Crosshair", ref espAimCrosshair)) _config.EspAimCrosshair = espAimCrosshair;
+        if (Toggle("Aim Crosshair", ref espAimCrosshair)) { _config.EspAimCrosshair = espAimCrosshair; ConfigManager.UpdateCache(_config); }
+
+        var sniperCrosshair = _config.SniperCrosshair;
+        if (Toggle("Sniper Crosshair", ref sniperCrosshair)) { _config.SniperCrosshair = sniperCrosshair; ConfigManager.UpdateCache(_config); }
 
         ImGui.Spacing();
         SectionHeader("World");
@@ -236,6 +282,30 @@ public class OverlayRenderer : Overlay
         if (Toggle("Bomb Timer", ref bombTimer)) _config.BombTimer = bombTimer;
         var voteTeller = _config.VoteTeller;
         if (Toggle("Vote Teller", ref voteTeller)) _config.VoteTeller = voteTeller;
+        var spectatorList = _config.SpectatorList;
+        if (Toggle("Spectator List", ref spectatorList)) _config.SpectatorList = spectatorList;
+
+        var specColorVec = new Vector4(_config.SpectatorListColor[0], _config.SpectatorListColor[1], _config.SpectatorListColor[2], _config.SpectatorListColor[3]);
+        if (ImGui.ColorEdit4("Spectator Color", ref specColorVec))
+        {
+            _config.SpectatorListColor[0] = specColorVec.X;
+            _config.SpectatorListColor[1] = specColorVec.Y;
+            _config.SpectatorListColor[2] = specColorVec.Z;
+            _config.SpectatorListColor[3] = specColorVec.W;
+            ConfigManager.UpdateCache(_config);
+        }
+
+        var specFontSize = _config.SpectatorListFontSize;
+        if (ImGui.SliderFloat("Spec Font Size", ref specFontSize, 10f, 40f, "%.0f"))
+        { _config.SpectatorListFontSize = specFontSize; ConfigManager.UpdateCache(_config); }
+
+        var specPosX = _config.SpectatorListPosX;
+        if (ImGui.SliderFloat("Spec Pos X (%)", ref specPosX, 0f, 100f, "%.1f"))
+        { _config.SpectatorListPosX = specPosX; ConfigManager.UpdateCache(_config); }
+
+        var specPosY = _config.SpectatorListPosY;
+        if (ImGui.SliderFloat("Spec Pos Y (%)", ref specPosY, 0f, 100f, "%.1f"))
+        { _config.SpectatorListPosY = specPosY; ConfigManager.UpdateCache(_config); }
     }
 
     void TabMisc()
@@ -366,11 +436,15 @@ public class OverlayRenderer : Overlay
 
     void RenderVisuals(ImDrawListPtr dl)
     {
-        if (_config.EspBox) EspBox.Draw(dl, _gameData);
+        if (!_config.EnableVisuals) return;
+
+        EspBox.Draw(dl, _gameData);
         if (_config.SkeletonEsp) SkeletonEsp.Draw(dl, _gameData);
         if (_config.EspAimCrosshair) EspAimCrosshair.Draw(dl, _gameData, _gameProcess);
+        if (_config.SniperCrosshair) SniperCrosshair.Draw(dl, _gameData, _gameProcess);
         if (_config.BombTimer) BombTimer.Draw(dl);
         if (_config.VoteTeller) VoteTeller.Draw(dl);
+        if (_config.SpectatorList) SpectatorList.Draw(dl, _gameData, _gameProcess);
 
         if (_config.AimFovCircle)
         {

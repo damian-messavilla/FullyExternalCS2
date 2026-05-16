@@ -13,16 +13,27 @@ public class ConfigManager
     private static readonly object _cacheLock = new();
     private static FileSystemWatcher? _watcher;
 
+    public bool EnableVisuals { get; set; } = true;
     public bool EspBox { get; set; }
     public bool EspName { get; set; }
     public bool EspWeapon { get; set; }
     public bool EspFlags { get; set; }
     public float[] EspBoxColor { get; set; } = new float[] { 1f, 0f, 0f, 1f };
     public bool SkeletonEsp { get; set; }
+    public float[] SkeletonEspColor { get; set; } = new float[] { 1f, 1f, 1f, 1f };
+    public bool SkeletonHeadCircle { get; set; }
+    public float[] SkeletonHeadCircleColor { get; set; } = new float[] { 1f, 1f, 1f, 1f };
+    public float[] EspNameColor { get; set; } = new float[] { 1f, 1f, 1f, 1f };
     public bool EspAimCrosshair { get; set; }
+    public bool SniperCrosshair { get; set; } = true;
     public bool BombTimer { get; set; }
     public bool VoteTeller { get; set; }
     public bool TeamCheck { get; set; }
+    public bool SpectatorList { get; set; }
+    public float[] SpectatorListColor { get; set; } = new float[] { 1f, 1f, 1f, 1f };
+    public float SpectatorListPosX { get; set; }
+    public float SpectatorListPosY { get; set; }
+    public float SpectatorListFontSize { get; set; }
 
     public bool AimBot { get; set; }
     public bool AimFovCircle { get; set; }
@@ -117,6 +128,10 @@ public class ConfigManager
         if (!json.Contains(nameof(EspWeapon), StringComparison.OrdinalIgnoreCase)) config.EspWeapon = defaults.EspWeapon;
         if (!json.Contains(nameof(EspFlags), StringComparison.OrdinalIgnoreCase)) config.EspFlags = defaults.EspFlags;
         if (!json.Contains(nameof(VoteTeller), StringComparison.OrdinalIgnoreCase)) config.VoteTeller = defaults.VoteTeller;
+        if (!json.Contains(nameof(SkeletonEspColor), StringComparison.OrdinalIgnoreCase)) config.SkeletonEspColor = defaults.SkeletonEspColor;
+        if (!json.Contains(nameof(SkeletonHeadCircle), StringComparison.OrdinalIgnoreCase)) config.SkeletonHeadCircle = defaults.SkeletonHeadCircle;
+        if (!json.Contains(nameof(SkeletonHeadCircleColor), StringComparison.OrdinalIgnoreCase)) config.SkeletonHeadCircleColor = defaults.SkeletonHeadCircleColor;
+        if (!json.Contains(nameof(EspNameColor), StringComparison.OrdinalIgnoreCase)) config.EspNameColor = defaults.EspNameColor;
     }
 
     private static void SanitizeKeys(ConfigManager config)
@@ -177,6 +192,7 @@ public class ConfigManager
     {
         return new ConfigManager
         {
+            EnableVisuals = true,
             AimBot = true,
             AimFovCircle = true,
             AimFov = 15f,
@@ -193,11 +209,21 @@ public class ConfigManager
             EspFlags = true,
             EspBoxColor = new float[] { 1f, 0f, 0f, 1f },
             SkeletonEsp = false,
+            SkeletonEspColor = new float[] { 1f, 1f, 1f, 1f },
+            SkeletonHeadCircle = true,
+            SkeletonHeadCircleColor = new float[] { 1f, 1f, 1f, 1f },
+            EspNameColor = new float[] { 1f, 1f, 1f, 1f },
             TriggerBot = true,
             AimBotKey = Keys.LButton,
             TriggerBotKey = Keys.LMenu,
             MenuToggleKey = Keys.Insert,
-            TeamCheck = true
+            TeamCheck = true,
+            SniperCrosshair = true,
+            SpectatorList = true,
+            SpectatorListColor = new float[] { 1f, 1f, 1f, 1f },
+            SpectatorListPosX = 1f,
+            SpectatorListPosY = 38f,
+            SpectatorListFontSize = 20f
         };
     }
 

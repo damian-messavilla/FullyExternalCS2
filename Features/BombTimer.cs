@@ -93,28 +93,62 @@ internal class BombTimer : ThreadedServiceBase
         var defuseText = _beingDefused ? $"Defuse time: {_defuseLeft:0.00} seconds" : string.Empty;
         var defusedText = _bombDefused ? "BOMB DEFUSED!" : string.Empty;
 
-        var color = _bombDefused ? OverlayRenderer.Colors.LimeGreen :
-                    _timeLeft < 5 ? OverlayRenderer.Colors.Red :
+        uint color;
+        if (_bombDefused)
+        {
+            color = OverlayRenderer.Colors.LimeGreen;
+        }
+        else if (_beingDefused)
+        {
+            if (_defuseLeft < _timeLeft)
+            {
+                color = OverlayRenderer.Colors.LimeGreen; // Enough time to defuse
+            }
+            else
+            {
+                // Not enough time! Blink Red/Yellow
+                float time = (float)ImGui.GetTime();
+                color = (time % 0.4f < 0.2f) ? OverlayRenderer.Colors.Red : OverlayRenderer.Colors.Yellow;
+            }
+        }
+        else
+        {
+            color = _timeLeft < 5 ? OverlayRenderer.Colors.Red :
                     _timeLeft < 15 ? OverlayRenderer.Colors.Yellow : OverlayRenderer.Colors.WhiteSmoke;
+        }
 
         var y = 500f;
         var fontSize = ImGui.GetFontSize() * 1.5f;
         var font = ImGui.GetFont();
 
-        drawList.AddText(font, fontSize, new Vector2(10, y), color, _bombPlanted);
+        DrawOutlinedText(drawList, font, fontSize, new Vector2(10, y), color, _bombPlanted);
         y += fontSize + 4;
-        drawList.AddText(font, fontSize, new Vector2(10, y), color, timerText);
+        DrawOutlinedText(drawList, font, fontSize, new Vector2(10, y), color, timerText);
 
         if (!string.IsNullOrEmpty(defuseText))
         {
             y += fontSize + 4;
-            drawList.AddText(font, fontSize, new Vector2(10, y), color, defuseText);
+            DrawOutlinedText(drawList, font, fontSize, new Vector2(10, y), color, defuseText);
         }
 
         if (!string.IsNullOrEmpty(defusedText))
         {
             y += fontSize + 4;
-            drawList.AddText(font, fontSize, new Vector2(10, y), OverlayRenderer.Colors.LimeGreen, defusedText);
+            DrawOutlinedText(drawList, font, fontSize, new Vector2(10, y), OverlayRenderer.Colors.LimeGreen, defusedText);
         }
+    }
+
+    private static void DrawOutlinedText(ImDrawListPtr drawList, ImFontPtr font, float fontSize, Vector2 pos, uint color, string text)
+    {
+        var black = OverlayRenderer.Colors.Black;
+        drawList.AddText(font, fontSize, pos + new Vector2(-1, -1), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2( 1, -1), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2(-1,  1), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2( 1,  1), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2(-1,  0), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2( 1,  0), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2( 0, -1), black, text);
+        drawList.AddText(font, fontSize, pos + new Vector2( 0,  1), black, text);
+        drawList.AddText(font, fontSize, pos, color, text);
     }
 }

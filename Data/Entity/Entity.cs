@@ -9,6 +9,7 @@ public class Entity : EntityBase
 {
     private readonly ConcurrentDictionary<string, Vector3> _bonePositions;
     private bool _dormant = true;
+    private IntPtr _lastControllerBase;
 
     public Entity(int index)
     {
@@ -65,9 +66,16 @@ public class Entity : EntityBase
         IsSpotted = gameProcess.Process?.Read<bool>(AddressBase + Offsets.m_entitySpottedState + 0x8) ?? false;
         IsInScope = gameProcess.Process?.Read<int>(AddressBase + Offsets.m_bIsScoped) ?? 0;
         FlashAlpha = gameProcess.Process?.Read<int>(AddressBase + Offsets.m_flFlashDuration) ?? 0;
-        Name = gameProcess.Process != null
-            ? gameProcess.Process.ReadString(ControllerBase + Offsets.m_iszPlayerName)
-            : string.Empty;
+        if (ControllerBase != _lastControllerBase)
+        {
+            Name = string.Empty;
+            _lastControllerBase = ControllerBase;
+        }
+
+        if (string.IsNullOrEmpty(Name) && gameProcess.Process != null)
+        {
+            Name = gameProcess.Process.ReadString(ControllerBase + Offsets.m_iszPlayerName) ?? string.Empty;
+        }
 
         return !IsAlive() || UpdateBonePositions(gameProcess);
     }

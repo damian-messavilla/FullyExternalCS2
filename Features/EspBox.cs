@@ -55,17 +55,19 @@ public static class EspBox
 
         var healthPercentage = Math.Clamp(entity.Health / 100f, 0f, 1f);
 
-        drawList.AddRect(topLeft, bottomRight, color, 0, ImDrawFlags.None, 1.5f);
+        if (Config.EspBox)
+            drawList.AddRect(topLeft, bottomRight, color, 0, ImDrawFlags.None, 1.5f);
 
-        var healthBarLeft = topLeft.X - 10f;
+        var healthBarLeft = topLeft.X - 8f;
         var healthBarTopLeft = new Vector2(healthBarLeft, topLeft.Y);
-        var healthBarBottomRight = new Vector2(healthBarLeft + 6f, bottomRight.Y);
+        var healthBarBottomRight = new Vector2(healthBarLeft + 3f, bottomRight.Y);
         DrawHealthBar(drawList, healthBarTopLeft, healthBarBottomRight, healthPercentage);
 
         var healthText = entity.Health.ToString();
-        var healthX = bottomRight.X + 4;
-        var healthY = topLeft.Y + (bottomRight.Y - topLeft.Y) / 2 - 6;
-        drawList.AddText(new Vector2(healthX, healthY), OverlayRenderer.Colors.White, healthText);
+        var healthTextWidth = healthText.Length * 7f;
+        var healthX = healthBarLeft - healthTextWidth - 2f;
+        var healthY = topLeft.Y - 2f;
+        DrawOutlinedText(drawList, new Vector2(healthX, healthY), OverlayRenderer.Colors.White, healthText);
 
         if (Config.EspWeapon)
         {
@@ -78,12 +80,14 @@ public static class EspBox
             }
         }
 
-        if (Config.EspName && player.Team != entity.Team)
+        if (Config.EspName && (!Config.TeamCheck || player.Team != entity.Team))
         {
+            var nc = Config.EspNameColor;
+            var nameColor = OverlayRenderer.ToColor(new Vector4(nc[0], nc[1], nc[2], nc[3]));
             var name = entity.Name ?? "UNKNOWN";
             var nameX = (topLeft.X + bottomRight.X) / 2 - name.Length * 3;
             var nameY = topLeft.Y - 15f;
-            DrawOutlinedText(drawList, new Vector2(nameX, nameY), OverlayRenderer.Colors.White, name);
+            DrawOutlinedText(drawList, new Vector2(nameX, nameY), nameColor, name);
         }
 
         if (Config.EspFlags)
@@ -118,13 +122,24 @@ public static class EspBox
         var healthColor = GetHealthColor(healthPercentage);
         drawList.AddRectFilled(filledTop, bottomRight, healthColor);
 
-        drawList.AddRect(topLeft, bottomRight, OverlayRenderer.Colors.DarkGray);
+        drawList.AddRect(topLeft, bottomRight, OverlayRenderer.Colors.Black);
     }
 
     private static uint GetHealthColor(float percentage)
     {
-        var r = (byte)(percentage < 0.5f ? 255 : (int)(255 * (1 - percentage) * 2));
-        var g = (byte)(percentage > 0.5f ? 255 : (int)(255 * percentage * 2));
+        byte r, g;
+        if (percentage < 0.5f)
+        {
+            var t = percentage * 2f;
+            r = 255;
+            g = (byte)(255 * t);
+        }
+        else
+        {
+            var t = (percentage - 0.5f) * 2f;
+            r = (byte)(255 * (1f - t));
+            g = 255;
+        }
         return OverlayRenderer.ToColor(r, g, 0);
     }
 

@@ -21,6 +21,7 @@ public class Player : EntityBase
     public Vector3 EyeDirection { get; private set; }
     public static int Fov => 90;
     public int FFlags { get; private set; }
+    public bool IsScoped { get; private set; }
 
     private int PreviousTotalHits { get; set; }
 
@@ -57,6 +58,7 @@ public class Player : EntityBase
         ViewAngles = gameProcess.ModuleClient.Read<Vector3>(Offsets.dwViewAngles);
         AimPunchAngle = ReadAimPunchAngle(gameProcess);
         FFlags = gameProcess.Process.Read<int>(AddressBase + Offsets.m_fFlags);
+        IsScoped = gameProcess.Process.Read<bool>(AddressBase + Offsets.m_bIsScoped);
 
         EyeDirection =
             GraphicsMath.GetVectorFromEulerAngles(ViewAngles.X.DegreeToRadian(), ViewAngles.Y.DegreeToRadian());

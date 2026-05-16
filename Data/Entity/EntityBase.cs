@@ -23,6 +23,7 @@ public abstract class EntityBase
     public short WeaponIndex { get; private set; }
 
     public Vector3 Velocity { get; private set; }
+    public IntPtr ObserverTarget { get; private set; }
 
 
     public virtual bool IsAlive()
@@ -62,6 +63,7 @@ public abstract class EntityBase
                                               Offsets.m_iItemDefinitionIndex);
         CurrentWeaponName = Enum.GetName(typeof(WeaponIndexes), WeaponIndex) ?? string.Empty;
         Velocity = gameProcess.Process.Read<Vector3>(AddressBase + Offsets.m_vecAbsVelocity);
+        ObserverTarget = ReadObserverTarget(gameProcess);
 
         return true;
     }
@@ -70,12 +72,26 @@ public abstract class EntityBase
     {
         if (gameProcess.Process == null) return IntPtr.Zero;
 
-        var directWeapon = gameProcess.Process.Read<IntPtr>(AddressBase + Offsets.m_pClippingWeapon);
-        if (IsValidWeaponIndex(gameProcess, directWeapon)) return directWeapon;
+        // New path: Pawn → m_pWeaponServices → m_hActiveWeapon (handle) → resolve via EntityList
+        var weaponServices = gameProcess.Process.Read<IntPtr>(AddressBase + Offsets.m_pWeaponServices);
+        if (weaponServices == IntPtr.Zero) return IntPtr.Zero;
 
-        var weaponHandle = gameProcess.Process.Read<int>(AddressBase + Offsets.m_pClippingWeapon);
-        var weaponFromHandle = ReadEntityFromHandle(gameProcess, weaponHandle);
-        return IsValidWeaponIndex(gameProcess, weaponFromHandle) ? weaponFromHandle : IntPtr.Zero;
+        var weaponHandle = gameProcess.Process.Read<int>(weaponServices + Offsets.m_hActiveWeapon);
+        var weaponEntity = ReadEntityFromHandle(gameProcess, weaponHandle);
+        if (IsValidWeaponIndex(gameProcess, weaponEntity)) return weaponEntity;
+
+        // Fallback: try legacy m_pClippingWeapon if offset is available
+        if (Offsets.m_pClippingWeapon != 0)
+        {
+            var directWeapon = gameProcess.Process.Read<IntPtr>(AddressBase + Offsets.m_pClippingWeapon);
+            if (IsValidWeaponIndex(gameProcess, directWeapon)) return directWeapon;
+
+            var clipHandle = gameProcess.Process.Read<int>(AddressBase + Offsets.m_pClippingWeapon);
+            var clipEntity = ReadEntityFromHandle(gameProcess, clipHandle);
+            if (IsValidWeaponIndex(gameProcess, clipEntity)) return clipEntity;
+        }
+
+        return IntPtr.Zero;
     }
 
     private bool IsValidWeaponIndex(GameProcess gameProcess, IntPtr weaponAddress)
@@ -95,5 +111,16 @@ public abstract class EntityBase
         return entry == IntPtr.Zero
             ? IntPtr.Zero
             : gameProcess.Process.Read<IntPtr>(entry + 112 * (handle & 0x1FF));
+    }
+
+    private IntPtr ReadObserverTarget(GameProcess gameProcess)
+    {
+        if (gameProcess.Process == null) return IntPtr.Zero;
+        
+        var observerServices = gameProcess.Process.Read<IntPtr>(AddressBase + Offsets.m_pObserverServices);
+        if (observerServices == IntPtr.Zero) return IntPtr.Zero;
+
+        var observerTargetHandle = gameProcess.Process.Read<int>(observerServices + Offsets.m_hObserverTarget);
+        return ReadEntityFromHandle(gameProcess, observerTargetHandle);
     }
 }
